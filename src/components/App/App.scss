@@ -1,0 +1,14 @@
+.app {
+  width: MIN(60%, 980px);
+  margin: 15px auto;
+
+  @media screen and (max-width: 640px) {
+    width: 90%;
+  }
+}
+
+.app-header {
+  h1 {
+    text-align: center;
+  }
+}
