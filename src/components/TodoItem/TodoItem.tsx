@@ -2,14 +2,25 @@ import './TodoItem.scss';
 import Button from "@mui/material/Button";
 import Checkbox from '@mui/material/Checkbox';
 import {FormControlLabel} from '@mui/material';
+import {ITodo} from "../../types";
 
-const TodoItem = ({title}: {title: string}) => {
+interface IProps {
+    todo: ITodo;
+    changeStatus: () => void;
+}
+
+const TodoItem = ({todo, changeStatus}: IProps) => {
+
   return (
       <div className='todo-item'>
           <div className='todo-item__checkbox'>
               <FormControlLabel
-                  control={<Checkbox />}
-                  label={title}
+                  control={
+                  <Checkbox
+                      checked={todo.isDone}
+                      onChange={changeStatus}
+                  />}
+                  label={todo.title}
               />
           </div>
           <div className='todo-item__action'>

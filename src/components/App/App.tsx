@@ -1,8 +1,17 @@
 import './App.scss';
 import TodoAddContainer from "../TodoAddContainer/TodoAddContainer";
 import TodoList from "../TodoList/TodoList";
+import {useEffect} from "react";
+import {useAppDispatch} from "../../hooks/redux";
+import {setTodoList} from "../../stores/reducers/TodoSlice";
 
 function App() {
+    const dispatch = useAppDispatch();
+
+    useEffect(() => {
+        dispatch(setTodoList());
+    }, [dispatch]);
+
   return (
     <div className="app">
       <header className="app-header">
