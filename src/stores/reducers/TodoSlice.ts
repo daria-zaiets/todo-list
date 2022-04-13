@@ -5,7 +5,6 @@ import TodoService from '../../services'
 
 const initialState: ITodoSate = {
     todosMap: {},
-    todoList: [],
     pendingTodos: [],
     doneTodos: []
 };
@@ -16,42 +15,31 @@ export const todoSlice = createSlice({
     reducers: {
         addTodo: (state: ITodoSate, {payload}: PayloadAction<string>) => {
             const todo = TodoService.addTodo(payload);
-            state.pendingTodos.unshift(todo.id);
-            state.todoList.unshift(todo);
+            state.pendingTodos.push(todo);
         },
         setTodoList: (state: ITodoSate) => {
             state.todosMap = TodoService.getTodoList();
-            const todosMap = { ...state.todosMap}
-
-            for (const todosMapId in todosMap) {
-                if(todosMap[todosMapId]['isDone']) {
-                    state.doneTodos.push(todosMapId);
-                } else {
-                    state.pendingTodos.push(todosMapId);
-                }
+            const todosMap = state.todosMap;
+            for (const todosMapKey in todosMap) {
+                if(todosMap[todosMapKey].isDone) state.doneTodos.push(todosMap[todosMapKey]);
+                else state.pendingTodos.push(todosMap[todosMapKey])
             }
-
-            const todoIdList = [...state.pendingTodos, ...state.doneTodos];
-            state.todoList = todoIdList.map(todoId => state.todosMap[todoId]);
         },
         changeStatus: (state: ITodoSate, {payload}: PayloadAction<string>) => {
             const newStatus = TodoService.changeStatus(payload);
             state.todosMap[payload].isDone = newStatus;
-
             if(newStatus) {
-                state.pendingTodos = state.pendingTodos.filter(todoId => todoId !== payload);
-                state.doneTodos.push(payload);
+                state.pendingTodos = state.pendingTodos.filter(todo => todo.id !== payload);
+                state.doneTodos.push(state.todosMap[payload]);
             } else {
-                state.doneTodos = state.doneTodos.filter(todoId => todoId !== payload);
-                state.pendingTodos.unshift(payload);
+                state.doneTodos = state.doneTodos.filter(todo => todo.id !== payload);
+                state.pendingTodos.push(state.todosMap[payload]);
             }
-
-            const todoIdList = [...state.pendingTodos, ...state.doneTodos];
-            state.todoList = todoIdList.map(todoId => state.todosMap[todoId]);
         }
     },
 });
 
 export const {addTodo, setTodoList, changeStatus} = todoSlice.actions;
-export const todoList = ({todoReducer}: RootState) => todoReducer.todoList;
+export const pendingTodos = ({todoReducer}: RootState) => todoReducer.pendingTodos;
+export const doneTodos = ({todoReducer}: RootState) => todoReducer.doneTodos;
 export default todoSlice.reducer

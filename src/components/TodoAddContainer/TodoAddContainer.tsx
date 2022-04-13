@@ -1,7 +1,7 @@
 import {KeyboardEvent, ChangeEvent, useState} from "react";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import './TodoAddContainer.scss';
+import scss from './TodoAddContainer.module.scss';
 import {useAppDispatch} from "../../hooks/redux";
 import {addTodo} from "../../stores/reducers/TodoSlice";
 
@@ -23,7 +23,7 @@ const TodoAddContainer = () => {
     }
 
   return (
-      <div className="add-container">
+      <div className={scss.addContainer}>
           <TextField
               className='app-body__todo-input'
               label='add item'

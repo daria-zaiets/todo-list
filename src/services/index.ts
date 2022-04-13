@@ -15,7 +15,8 @@ class TodoService {
         const todo: ITodo = {
             id: todoId().toString(),
             title: todoTitle,
-            isDone: false
+            isDone: false,
+            creationsDate: Number(new Date()),
         };
 
         const todos = localStorage.getItem(storeKey);

@@ -2,11 +2,11 @@ export interface ITodo {
     id: string;
     title: string;
     isDone: boolean;
+    creationsDate: number;
 }
 
 export interface ITodoSate {
     todosMap: Record<ITodo['id'], ITodo>;
-    todoList: ITodo[];
-    pendingTodos: ITodo['id'][];
-    doneTodos: ITodo['id'][];
+    pendingTodos: ITodo[];
+    doneTodos: ITodo[];
 }

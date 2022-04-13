@@ -1,4 +1,4 @@
-.todo-item {
+.todoItem {
   display: grid;
   grid-template-columns: 75fr 20fr;
   grid-gap: 5fr;
@@ -8,17 +8,33 @@
   border-left: 3px solid #1976D2;
   border-start-end-radius: 5px;
   border-end-end-radius: 5px;
-  box-shadow: 5px 5px 10px gray;
+  box-shadow: 5px 5px 10px #808080FF;
+
+  &_done {
+    border-left: 3px solid #808080FF;
+  }
 
   &:hover {
     transform: scale(1.02);
     transition-duration: 200ms;
   }
 
+  &__label {
+    &_done {
+      text-decoration: line-through;
+      color: #808080FF;
+    }
+  }
+
   &__action {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    color: #1976D2;
+
+    &_done {
+      color: #808080FF;
+    }
   }
 
   &__checkbox {
