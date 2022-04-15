@@ -7,7 +7,15 @@
   transition-duration: 500ms;
 }
 
+%noneSelectText {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
 .filterItem {
+  @extend %noneSelectText;
   padding: 5px 20px;
   border-radius: 20px;
   cursor: pointer;
