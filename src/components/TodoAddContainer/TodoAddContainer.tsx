@@ -17,16 +17,17 @@ const TodoAddContainer = () => {
     const dispatch = useAppDispatch();
     const isDuplicateTitle = useAppSelector(isTodoInList);
 
-    const [todoText, setTodoText] = useState('');
+    const [todoTitle, setTodoTitle] = useState('');
     const [errorText, setErrorText] = useState< ERROR_TEXT | null>(null);
 
     const onChangeTodoText = (event: ChangeEvent<HTMLInputElement>) => {
         errorText && setErrorText(null);
-        setTodoText(event.target.value);
+        setTodoTitle(event.target.value);
     };
 
     const addItem = () => {
-        if(!todoText.trim()) {
+        const todoText = todoTitle.trim();
+        if(!todoText) {
             setErrorText(ERROR_TEXT.EMPTY_FILED);
             return;
         }
@@ -35,7 +36,7 @@ const TodoAddContainer = () => {
             return;
         }
         dispatch(addTodo(todoText));
-        setTodoText('');
+        setTodoTitle('');
     };
 
     const enterHandler = (event: KeyboardEvent<HTMLInputElement>) => {
@@ -50,7 +51,7 @@ const TodoAddContainer = () => {
               label='add item'
               variant='outlined'
               size='small'
-              value={todoText}
+              value={todoTitle}
               onChange={onChangeTodoText}
               onKeyUp={enterHandler}
               error={!!errorText}
