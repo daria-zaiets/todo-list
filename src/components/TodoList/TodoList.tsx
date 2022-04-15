@@ -16,23 +16,26 @@ const TodoList = () => {
     const removeTodo = useCallback((todoId: string) => () =>  {
         dispatch(deleteTodo(todoId));
     }, [dispatch])
-
   return (
-      <>
+      <div>
           <TodoFilterGroup />
-          <div className={scss.todoList}>
-              { todoList
-                  .sort((a,b) => b.creationsDate - a.creationsDate)
-                  .map(todo => (
-                      <TodoItem
-                          key={todo.id}
-                          todo={todo}
-                          changeStatus={changeStatusTodo(todo.id)}
-                          deleteTodo={removeTodo(todo.id)}
-                      />))
-              }
-          </div>
-      </>
+          {!!todoList.length
+              ? (
+              <div className={scss.todoList}>
+                  {todoList
+                      .sort((a, b) => b.creationsDate - a.creationsDate)
+                      .map(todo => (
+                          <TodoItem
+                              key={todo.id}
+                              todo={todo}
+                              changeStatus={changeStatusTodo(todo.id)}
+                              deleteTodo={removeTodo(todo.id)}
+                          />))
+                  }
+              </div>)
+              :
+              <h2 className={scss.noTodoContainer}>There is no todos</h2>}
+      </div>
   );
 }
 

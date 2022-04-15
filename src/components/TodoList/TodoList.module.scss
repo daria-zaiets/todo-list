@@ -1,6 +1,17 @@
+@import "src/scss/variables";
+
 .todoList {
   display: flex;
   flex-flow: column nowrap;
   gap: 15px;
 }
 
+.noTodoContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  text-align: center;
+  color: $secondary-font;
+  height: 50vh;
+}

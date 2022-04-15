@@ -1,3 +1,5 @@
+@import "src/scss/variables";
+
 .app {
   width: MIN(60%, 980px);
   margin: 15px auto;
@@ -10,5 +12,6 @@
 .appHeader {
   h1 {
     text-align: center;
+    color: $secondary-dark;
   }
 }
