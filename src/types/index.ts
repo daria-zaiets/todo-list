@@ -7,7 +7,6 @@ export interface ITodo {
 
 export interface ITodoSate {
     todosMap: Record<ITodo['id'], ITodo>;
-    // todoList: ITodo[];
     filter: FILTER;
     pendingTodos: ITodo['id'][];
     doneTodos: ITodo['id'][];

@@ -7,7 +7,7 @@ const initialState: ITodoSate = {
     todosMap: {},
     filter: FILTER.ALL,
     pendingTodos: [],
-    doneTodos: [],
+    doneTodos: []
 };
 
 export const todoSlice = createSlice({
@@ -69,6 +69,10 @@ export const todos = ({todoReducer}: RootState) => {
     } else {
         return allTodos;
     }
+};
+
+export const  isTodoInList = ({todoReducer}: RootState) => (todoTitle: string) => {
+    return !!Object.values(todoReducer.todosMap).find(todo => todo.title === todoTitle);
 };
 
 export default todoSlice.reducer
