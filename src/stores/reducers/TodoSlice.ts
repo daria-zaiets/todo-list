@@ -1,45 +1,74 @@
-import {ITodoSate} from "../../types";
+import {FILTER, IRemoveTodo, ITodoSate} from "../../types";
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../index";
-import TodoService from '../../services'
+import TodoService from '../../services';
 
 const initialState: ITodoSate = {
     todosMap: {},
+    filter: FILTER.ALL,
     pendingTodos: [],
-    doneTodos: []
+    doneTodos: [],
 };
 
 export const todoSlice = createSlice({
     name: 'todos',
     initialState,
     reducers: {
-        addTodo: (state: ITodoSate, {payload}: PayloadAction<string>) => {
-            const todo = TodoService.addTodo(payload);
-            state.pendingTodos.push(todo);
-        },
         setTodoList: (state: ITodoSate) => {
             state.todosMap = TodoService.getTodoList();
             const todosMap = state.todosMap;
             for (const todosMapKey in todosMap) {
-                if(todosMap[todosMapKey].isDone) state.doneTodos.push(todosMap[todosMapKey]);
-                else state.pendingTodos.push(todosMap[todosMapKey])
+                const isDoneTodo = todosMap[todosMapKey].isDone;
+                isDoneTodo
+                    ? state.doneTodos.push(todosMapKey)
+                    : state.pendingTodos.push(todosMapKey);
             }
         },
-        changeStatus: (state: ITodoSate, {payload}: PayloadAction<string>) => {
+        addTodo: (state: ITodoSate, {payload}: PayloadAction<string>) => {
+            const todo = TodoService.addTodo(payload);
+            state.todosMap[todo.id] = todo;
+            state.pendingTodos.push(todo.id);
+        },
+        changeStatus: (state: ITodoSate, {type, payload}: PayloadAction<string>) => {
             const newStatus = TodoService.changeStatus(payload);
             state.todosMap[payload].isDone = newStatus;
-            if(newStatus) {
-                state.pendingTodos = state.pendingTodos.filter(todo => todo.id !== payload);
-                state.doneTodos.push(state.todosMap[payload]);
+
+            const removeParams: IRemoveTodo = {
+                todoId: payload,
+                isNewStatusDone: newStatus
+            };
+            todoSlice.caseReducers.removeTodo(state,{type, payload: removeParams});
+        },
+        deleteTodo: (state: ITodoSate, {payload}: PayloadAction<string>) => {
+            TodoService.deleteTodo(payload);
+            delete state.todosMap[payload];
+        },
+        filterListByStatus: (state: ITodoSate, {payload}: PayloadAction<FILTER>) => {
+            state.filter = state.filter === payload ? FILTER.ALL : payload;
+        },
+        removeTodo: (state: ITodoSate, {payload}: PayloadAction<IRemoveTodo>) => {
+            if(payload.isNewStatusDone) {
+                state.pendingTodos = state.pendingTodos.filter(todoId => todoId !== payload.todoId);
+                state.doneTodos.push(payload.todoId);
             } else {
-                state.doneTodos = state.doneTodos.filter(todo => todo.id !== payload);
-                state.pendingTodos.push(state.todosMap[payload]);
+                state.doneTodos = state.doneTodos.filter(todoId => todoId !== payload.todoId);
+                state.pendingTodos.push(payload.todoId);
             }
         }
     },
 });
 
-export const {addTodo, setTodoList, changeStatus} = todoSlice.actions;
-export const pendingTodos = ({todoReducer}: RootState) => todoReducer.pendingTodos;
-export const doneTodos = ({todoReducer}: RootState) => todoReducer.doneTodos;
+export const {setTodoList, addTodo, changeStatus, deleteTodo, filterListByStatus} = todoSlice.actions;
+
+export const todos = ({todoReducer}: RootState) => {
+    const allTodos = [...Object.values(todoReducer.todosMap)];
+    if (todoReducer.filter === FILTER.PENDING) {
+        return allTodos.filter(todo => todoReducer.pendingTodos.includes(todo.id));
+    } else if (todoReducer.filter === FILTER.DONE) {
+        return allTodos.filter(todo => todoReducer.doneTodos.includes(todo.id));
+    } else {
+        return allTodos;
+    }
+};
+
 export default todoSlice.reducer

@@ -7,6 +7,19 @@ export interface ITodo {
 
 export interface ITodoSate {
     todosMap: Record<ITodo['id'], ITodo>;
-    pendingTodos: ITodo[];
-    doneTodos: ITodo[];
+    // todoList: ITodo[];
+    filter: FILTER;
+    pendingTodos: ITodo['id'][];
+    doneTodos: ITodo['id'][];
+}
+
+export enum FILTER {
+    ALL = 'ALL',
+    PENDING = 'PENDING',
+    DONE = 'DONE',
+}
+
+export interface IRemoveTodo {
+    todoId: string;
+    isNewStatusDone: boolean;
 }

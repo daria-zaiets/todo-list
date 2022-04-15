@@ -40,6 +40,16 @@ class TodoService {
         localStorage.setItem(storeKey, JSON.stringify(todosMap));
         return todosMap[todoId]['isDone'];
     }
+
+    public deleteTodo(todoId: string) {
+        const todos = localStorage.getItem(storeKey);
+        let todosMap: Record<string, ITodo>;
+
+        if(!todos) return false;
+        todosMap = JSON.parse(todos);
+        delete todosMap[todoId];
+        localStorage.setItem(storeKey, JSON.stringify(todosMap));
+    }
 }
 
 export default new TodoService();

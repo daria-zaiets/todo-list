@@ -1,3 +1,5 @@
+@import 'src/scss/variables';
+
 .todoItem {
   display: grid;
   grid-template-columns: 75fr 20fr;
@@ -5,13 +7,13 @@
 
   padding: 10px 0 10px 5px;
 
-  border-left: 3px solid #1976D2;
+  border-left: 3px solid $primary;
   border-start-end-radius: 5px;
   border-end-end-radius: 5px;
-  box-shadow: 5px 5px 10px #808080FF;
+  box-shadow: 5px 5px 10px $secondary;
 
   &_done {
-    border-left: 3px solid #808080FF;
+    border-left: 3px solid $secondary;
   }
 
   &:hover {
@@ -22,7 +24,7 @@
   &__label {
     &_done {
       text-decoration: line-through;
-      color: #808080FF;
+      color: $secondary;
     }
   }
 
@@ -30,10 +32,10 @@
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    color: #1976D2;
+    color: $primary;
 
     &_done {
-      color: #808080FF;
+      color: $secondary;
     }
   }
 

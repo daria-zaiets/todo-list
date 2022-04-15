@@ -1,0 +1,36 @@
+@import 'src/scss/variables';
+
+@mixin itemHover($shadowColor) {
+  opacity: 0.8;
+  transform: scale(1.01);
+  box-shadow: 0 0 5px $shadowColor;
+  transition-duration: 500ms;
+}
+
+.filterItem {
+  padding: 5px 20px;
+  border-radius: 20px;
+  cursor: pointer;
+
+  color: $secondary-font;
+  border: 0.5px solid $secondary-dark;
+  background-color: $secondary-light;
+
+  &:hover {
+    @include itemHover($secondary);
+  }
+
+  &_active {
+    color: $primary-font;
+    border: 1px solid $primary-dark;
+    box-shadow: 0 0 10px $primary-light;
+    background-color: $primary;
+
+    transform: scale(1.02);
+    transition-duration: 500ms;
+
+    &:hover {
+      @include itemHover($primary-dark);
+    }
+  }
+}
