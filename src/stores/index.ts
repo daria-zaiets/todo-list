@@ -1,13 +1,17 @@
-import {configureStore} from '@reduxjs/toolkit'
+import {combineReducers, configureStore} from '@reduxjs/toolkit'
 import todoReducer from './reducers/TodoSlice';
+import {ITodoSate} from "../types";
 
-const rootStore = configureStore({
-    reducer: {
-        todoReducer
-    },
+const rootReducer = combineReducers({
+    todoReducer,
 })
 
-export type RootState = ReturnType<typeof rootStore.getState>;
-export type AppDispatch = typeof rootStore.dispatch;
-
-export default rootStore;
+export const createReduxStore = (preloadedState: Record<string, ITodoSate> = {}) => {
+    return configureStore({
+        reducer: rootReducer,
+        preloadedState,
+    })
+};
+export type RootState = ReturnType<typeof rootReducer>;
+export type AppStore = ReturnType<typeof createReduxStore>;
+export type AppDispatch = AppStore["dispatch"];

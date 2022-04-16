@@ -3,7 +3,7 @@ import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {RootState} from "../index";
 import TodoService from '../../services';
 
-const initialState: ITodoSate = {
+export const initialState: ITodoSate = {
     todosMap: {},
     filter: FILTER.ALL,
     pendingTodos: [],

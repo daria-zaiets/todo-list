@@ -3,10 +3,10 @@ import './index.css';
 import App from './components/App/App';
 import reportWebVitals from './reportWebVitals';
 import {Provider} from "react-redux";
-import rootStore from "./stores";
+import {createReduxStore} from "./stores";
 
 ReactDOM.render(
-  <Provider store={rootStore}>
+  <Provider store={createReduxStore()}>
     <App />
   </Provider>,
   document.getElementById('root')

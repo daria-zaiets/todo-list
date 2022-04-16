@@ -5,10 +5,7 @@ import scss from './TodoAddContainer.module.scss';
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
 import {addTodo, isTodoInList} from "../../stores/reducers/TodoSlice";
 
-// const errorText = "field can't be empty";
-// const isTodoInListText = "duplicate title"
-
-enum ERROR_TEXT {
+export enum ERROR_TEXT {
     EMPTY_FILED = "field can't be empty",
     DUPLICATE_TITLE = "duplicate title"
 }
@@ -43,12 +40,10 @@ const TodoAddContainer = () => {
         if (event.key === 'Enter') addItem();
     }
 
-    // if(!isEmptyFiled && !isTodoInList) setTodoText('');
-
   return (
       <div className={scss.addContainer}>
           <TextField
-              label='add item'
+              label='Add item'
               variant='outlined'
               size='small'
               value={todoTitle}
@@ -56,9 +51,19 @@ const TodoAddContainer = () => {
               onKeyUp={enterHandler}
               error={!!errorText}
               helperText={errorText}
+              inputProps={{"data-testid": "add-item-field"}}
+
           />
           <div className={scss.addButtonContainer}>
-              <Button variant="contained" size='medium' onClick={addItem}> Add </Button>
+              <Button
+                  variant="contained"
+                  size='medium'
+                  onClick={addItem}
+                  data-testid='add-item-button'
+                  disabled={!todoTitle.trim()}
+              >
+                  Add
+              </Button>
           </div>
       </div>
   );

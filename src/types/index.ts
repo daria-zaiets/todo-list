@@ -7,9 +7,9 @@ export interface ITodo {
 
 export interface ITodoSate {
     todosMap: Record<ITodo['id'], ITodo>;
-    filter: FILTER;
     pendingTodos: ITodo['id'][];
     doneTodos: ITodo['id'][];
+    filter: FILTER;
 }
 
 export enum FILTER {
