@@ -22,7 +22,7 @@ const TodoList = () => {
           <TodoFilterGroup />
           {!!todoList.length
               ? (
-              <div className={scss.todoList}>
+              <div className={scss.todoList} data-testid="list-container">
                   {todoList
                       .sort((a, b) => b.creationsDate - a.creationsDate)
                       .map(todo => (
@@ -35,7 +35,7 @@ const TodoList = () => {
                   }
               </div>)
               :
-              <h2 className={scss.noTodoContainer}>There is no todos</h2>}
+              <h2 className={scss.noTodoContainer} data-testid="no-todos-container">There is no todos</h2>}
       </div>
   );
 }

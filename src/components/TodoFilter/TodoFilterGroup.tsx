@@ -21,7 +21,7 @@ const TodoFilterGroup = () => {
   };
 
   return (
-      <div className={scss.filterGroup}>
+      <div className={scss.filterGroup} data-testid="filter-group">
         {filterItems.map((filterItem: FILTER) => (
             <TodoFilterItem
                 key={filterItem}
