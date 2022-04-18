@@ -16,6 +16,7 @@ const TodoList = () => {
     const removeTodo = useCallback((todoId: string) => () =>  {
         dispatch(deleteTodo(todoId));
     }, [dispatch])
+
   return (
       <div>
           <TodoFilterGroup />
