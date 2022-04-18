@@ -14,6 +14,7 @@ const TodoFilterItem = ({title, setActive, isChecked = false}: IProps) => {
             [scss.filterItem_active]: isChecked
             })}
              onClick={setActive}
+            data-testid="filter-item"
         >
             {title}
         </div>
