@@ -34,9 +34,6 @@ const TodoItem = ({todo, changeStatus, deleteTodo}: IProps) => {
           <div className={cn(scss.todoItem__action, {
               [scss.todoItem__action_done]: todo.isDone
           })}>
-              <Button variant='text' size='small' color='inherit'>
-                  <span className="material-icons-outlined"> edit_note </span>
-              </Button>
               <Button variant='text' size='small' color='inherit' onClick={deleteTodo}>
                   <span className="material-icons-outlined"> delete_forever </span>
               </Button>
