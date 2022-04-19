@@ -2,7 +2,7 @@ import {FILTER} from "../../types";
 import TodoFilterItem from "./TodoFilterItem/TodoFilterItem";
 import scss from "./TodoFilterGroup.module.scss";
 import {useAppDispatch, useAppSelector} from "../../hooks/redux";
-import {filterListByStatus} from "../../stores/reducers/TodoSlice";
+import {setFilter} from "../../stores/reducers/TodoSlice";
 
 const filtersTitle = {
   [FILTER.ALL]: 'All',
@@ -17,7 +17,7 @@ const TodoFilterGroup = () => {
   const filterItems = Object.values(FILTER);
 
   const setActive = (filter: FILTER) => () => {
-    dispatch(filterListByStatus(filter));
+    dispatch(setFilter(filter));
   };
 
   return (

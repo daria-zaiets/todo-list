@@ -42,8 +42,14 @@ export const todoSlice = createSlice({
         deleteTodo: (state: ITodoSate, {payload}: PayloadAction<string>) => {
             TodoService.deleteTodo(payload);
             delete state.todosMap[payload];
+
+            if(state.doneTodos.includes(payload)) {
+                state.doneTodos = state.doneTodos.filter(todoId => todoId !== payload);
+            } else {
+                state.pendingTodos = state.pendingTodos.filter(todoId => todoId !== payload);
+            }
         },
-        filterListByStatus: (state: ITodoSate, {payload}: PayloadAction<FILTER>) => {
+        setFilter: (state: ITodoSate, {payload}: PayloadAction<FILTER>) => {
             state.filter = state.filter === payload ? FILTER.ALL : payload;
         },
         removeTodo: (state: ITodoSate, {payload}: PayloadAction<IRemoveTodo>) => {
@@ -58,7 +64,7 @@ export const todoSlice = createSlice({
     },
 });
 
-export const {setTodoList, addTodo, changeStatus, deleteTodo, filterListByStatus} = todoSlice.actions;
+export const {setTodoList, addTodo, changeStatus, deleteTodo, setFilter} = todoSlice.actions;
 
 export const todos = ({todoReducer}: RootState) => {
     const allTodos = [...Object.values(todoReducer.todosMap)];
